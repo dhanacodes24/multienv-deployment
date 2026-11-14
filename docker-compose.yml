@@ -1,0 +1,55 @@
+services:
+  mongo:
+    image: mongo:6
+    container_name: multienv-mongo
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - multienv-net
+    restart: unless-stopped
+ 
+  backend-dev:
+    build: ./backend/dev
+    container_name: backend-dev
+    env_file:
+      - ./backend/dev/.env
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongo
+    networks:
+      - multienv-net
+    restart: unless-stopped
+ 
+  backend-prod:
+    build: ./backend/prod
+    container_name: backend-prod
+    env_file:
+      - ./backend/prod/.env
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mongo
+    networks:
+      - multienv-net
+    restart: unless-stopped
+ 
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend-dev
+      - backend-prod
+    networks:
+      - multienv-net
+    restart: unless-stopped
+ 
+networks:
+  multienv-net:
+    driver: bridge
+ 
+volumes:
+  mongo-data:
+
