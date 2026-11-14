@@ -1,0 +1,9 @@
+Student Name: Dhanashree Salunke
+Repository URL: https://github.com/dhanacodes24/multienv-deployment.git 
+Deployment Status: Working
+Access URLs:
+- Development: http://localhost:3000/dev
+- Production:  http://localhost:3000/prod
+- Frontend: http://localhost:3000
+Date of Submission: 14-11-2026
+
